@@ -5,7 +5,10 @@ export default function Login() {
 
     const emailRef = useRef();
     const passwordRef = useRef();
-    const Submit = useRef();
+
+    const onSubmit =  (events) =>{
+      events.preventDefault();
+    };
  
   return (
     <>
@@ -14,12 +17,12 @@ export default function Login() {
               <h1 className="title">
                   Login
               </h1>
-              <form onSubmit={Submit}>
-              <input ref={emailRef} type="email" placeholder="Email" />
-                  <input ref={passwordRef} type="password" placeholder="Password" />
+              <form onSubmit={onSubmit}>
+              <input ref={emailRef} type="email" placeholder="Email" id="email"/>
+                  <input ref={passwordRef} type="password" placeholder="Password" id="pass"/>
                   <button className="btn">Login</button>
                   <p className="message">
-                      Not Registered? <Link to= '/guest/signup'>Create a new account</Link>
+                      Don't have an account? <Link to= '/guest/signup'>Sign Up</Link>
                   </p>
               </form>
           </div>
