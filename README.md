@@ -1,5 +1,5 @@
 # lws-exam
-Technical Hands-on Exam: Fullstack Developer
+Technical Hands-on Exam: Fullstack Developer (Laravel BackEnd - React FrontEnd)
 
 **FEATURES:**
 - Authentication system (signup, login, logout)
