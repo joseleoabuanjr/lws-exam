@@ -5,7 +5,7 @@ import Login from './components/login';
 import Signup from './components/signup';
 import NotFound from './components/notfound';
 import Home from './components/home';
-import Add from './components/add';
+import Add from './components/Crud/add';
 
 const router = createBrowserRouter([
 {
