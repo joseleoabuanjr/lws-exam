@@ -1,13 +1,32 @@
 import { Link, Outlet, Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/contextprovider";
+import axiosClient from "../axios-client.js";
+import {useEffect} from "react";
 
-export default function guestLayout(){
+export default function defaultLayout() {
 
-  const { token } = useStateContext()
+  const { user, token, setUser, setToken, } = useStateContext()
 
-  if(token){
-    return <Navigate to="/home" />
+  if(!token){
+    return <Navigate to="/guest/home" />
   }
+
+  const onLogout = events => {
+    events.preventDefault();
+
+    axiosClient.post('/logout')
+      .then(() => {
+        setUser({});
+        setToken(null);
+      })
+  }
+
+  useEffect(() => {
+    axiosClient.get('/home')
+      .then(({data}) => {
+         setUser(data);
+      })
+  }, [])
 
   return (
     <>
@@ -16,7 +35,7 @@ export default function guestLayout(){
           <h2>AnimeBinge</h2>
             <ul className="nav-menu">
                 <li className="nav-item">
-                    <Link to="/guest">Home</Link>
+                    <Link to="/">Home</Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/*">Discover</Link>
@@ -25,10 +44,10 @@ export default function guestLayout(){
                     <Link to="/*">About Us</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/login">Login</Link>
+                    <Link to="/*">{user.name}</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/signup">Sign Up</Link>
+                    <Link to="/logout" onClick={onLogout}>Logout</Link>
                 </li>
             </ul>
         </nav>

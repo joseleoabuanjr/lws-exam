@@ -1,12 +1,12 @@
 import { Link, Outlet, Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/contextprovider";
 
-export default function defaultLayout() {
+export default function guestLayout(){
 
   const { token } = useStateContext()
 
-  if(!token){
-    return <Navigate to="/login" />
+  if(token){
+    return <Navigate to="/home" />
   }
 
   return (
@@ -16,7 +16,7 @@ export default function defaultLayout() {
           <h2>AnimeBinge</h2>
             <ul className="nav-menu">
                 <li className="nav-item">
-                    <Link to="/">Home</Link>
+                    <Link to="/guest/home">Home</Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/*">Discover</Link>
@@ -25,7 +25,10 @@ export default function defaultLayout() {
                     <Link to="/*">About Us</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/guest/login">Logout</Link>
+                    <Link to="/guest/login">Login</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/guest/signup">Sign Up</Link>
                 </li>
             </ul>
         </nav>
