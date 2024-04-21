@@ -26,6 +26,8 @@ class UpdateAnimeRequest extends FormRequest
             'rating' => 'required',
             'category' => 'required',
             'description' => 'required',
+            'image' => 'required',
+            
         ];
     }
 }

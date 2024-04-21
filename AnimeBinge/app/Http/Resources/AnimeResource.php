@@ -20,6 +20,7 @@ class AnimeResource extends JsonResource
             'rating' => $this->rating,
             'category' => $this->category,
             'description' => $this->description,
+            'image' => $this->image,
         ];
     }
 }

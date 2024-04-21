@@ -26,6 +26,7 @@ class StoreAnimeRequest extends FormRequest
             'rating' => 'required',
             'category' => 'required',
             'description' => 'required',
+            'image' => 'required'
         ];
     }
 }

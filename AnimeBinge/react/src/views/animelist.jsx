@@ -22,14 +22,6 @@ export default function AnimeList() {
       })
   }
 
-  anime.map(item => (
-    item.id,
-    item.name,
-    item.rating,
-    item.category,
-    item.description
-  ))
-
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -46,6 +38,7 @@ export default function AnimeList() {
                 <p>Rating: {item.rating}</p>
                 <p>Category: {item.category}</p>
                 <p>Description: {item.description}</p>
+                <p>Image: {item.image}</p>
               </div>
             ))}
           </div>
