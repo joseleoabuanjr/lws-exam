@@ -4,6 +4,10 @@ import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/contextprovider";
 
 export default function Login() {
+  const { token } = useStateContext()
+  if(token){
+    
+  }
 
     const emailRef = useRef();
     const passwordRef = useRef();
