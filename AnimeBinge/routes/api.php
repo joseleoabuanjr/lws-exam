@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AnimeController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,12 @@ Route::middleware('auth:sanctum')->group(function() {
         return $request->user();
     });
     Route::post('/logout',[AuthController::class,'logout']);
+
+
+    Route::get('/animes', function (Request $request) {
+        return $request->anime();
+    });
+    Route::apiResource('/animes', AnimeController::class);
 });
 
 Route::post('/login',[AuthController::class,'login']);
