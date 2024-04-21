@@ -1,41 +1,49 @@
 import { createBrowserRouter } from 'react-router-dom';
-import DefaultLayout from './components/defaultLayout';
-import GuestLayout from './components/guestLayout';
+import Home from './components/home';
+import Guest from './components/guest';
 import Login from './views/login';
 import Signup from './views/signup';
-import NotFound from './views/notfound';
-import Home from './views/home';
-import Add from './views/Crud/add';
+import HomeContent from './views/homecontent';
+import Discover from './components/discover';
+import AddAnime from './views/addanime';
+import AnimeList from './views/animelist';
 
 const router = createBrowserRouter([
 {
     path: "/",
-    element: <DefaultLayout/>,
+    element: <Home/>,
     children:[
         {
-            path: "/home",
-            element: <Home/>,
+            path: "/",
+            element: <HomeContent/>,
         },
-        {
-            path: "/add",
-            element: <Add/>,
-        }
     ]
 },
 {
-    path: "/guest",
-    element: <GuestLayout/>,
+    path: "/discover",
+    element: <Discover/>,
     children: [
         {
-            path: "/guest/home",
-            element: <Home/>,
+            path: "/discover/",
+            element: <AnimeList/>,
         },
         {
-            path: "/guest/login",
+            path: "/discover/addanime",
+            element: <AddAnime/>,
+        },
+        
+    ]
+},
+{
+    path: "/",
+    element: <Guest/>,
+    children: [
+        {
+            path: "/login",
             element: <Login/>,
         },
         {
-            path: "/guest/signup",
+            path: "/signup",
             element: <Signup/>,
         }, 
     ]
