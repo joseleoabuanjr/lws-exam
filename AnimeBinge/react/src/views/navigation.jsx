@@ -1,55 +1,62 @@
 import { Link, Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/contextprovider";
 import axiosClient from "../axios-client.js";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 export default function Navigation() {
 
-    const { user, token, setUser, setToken, } = useStateContext();
+  // Destructuring user, token, setUser, and setToken from useStateContext
+  const { user, token, setUser, setToken } = useStateContext();
 
-    if(!token){
-        return <Navigate to="/login"/>
-    }
+  // If no token is present, navigate to the login page
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
 
-    const onLogout = events => {
-        events.preventDefault();
-    
-        axiosClient.post('/logout')
-          .then(() => {
-            setUser({});
-            setToken(null);
-          })
-      }
+  // Function to handle logout
+  const onLogout = (events) => {
+    events.preventDefault();
 
-      useEffect(() => {
-        axiosClient.get('/home')
-          .then(({data}) => {
-             setUser(data);
-          })
-      }, [])
+    // Send POST request to logout endpoint
+    axiosClient.post('/logout')
+      .then(() => {
+        // Clear user and token from context
+        setUser({});
+        setToken(null);
+      });
+  };
 
-      return(
-        <div className="navbar">
-            <nav className="Nav">
-                <h2>AnimeBinge</h2>
-                <ul className="nav-menu">
-                    <li className="nav-item">
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/discover">Discover</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/">About Us</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/">{user.name}</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/logout" onClick={onLogout}>Logout</Link>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-      )
+  // useEffect to fetch user data when component mounts
+  useEffect(() => {
+    axiosClient.get('/home')
+      .then(({ data }) => {
+        // Set user data in context
+        setUser(data);
+      });
+  }, []); // Empty dependency array to ensure useEffect runs only once when component mounts
+
+    return(
+    <div className="navbar">
+        <nav className="Nav">
+            <h2>AnimeBinge</h2>
+            <ul className="nav-menu">
+                <li className="nav-item">
+                    <Link to="/">Home</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/discover">Discover</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/">About Us</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/">{user.name}</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/logout" onClick={onLogout}>Logout</Link>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    )
 }

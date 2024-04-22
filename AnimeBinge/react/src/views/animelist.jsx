@@ -3,24 +3,41 @@ import axiosClient from "../axios-client.js";
 import { Link } from "react-router-dom";
 
 export default function AnimeList() {
+  // State to hold the list of anime and loading status
   const [anime, setAnimes] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // useEffect to fetch anime data when the component mounts
   useEffect(() => {
     getAnime();
-  }, [])
+  }, []);
 
+  // Function to fetch anime data
   const getAnime = () => {
-    setLoading(true)
-    axiosClient.get('/animes')
+    setLoading(true); // Set loading to true before making the request
+    axiosClient.get('/animes') // Make GET request to '/animes' endpoint
       .then(({ data }) => {
-        setLoading(false)
-        setAnimes(data.data)
+        setLoading(false); // Set loading to false after successful request
+        setAnimes(data.data); // Update anime state with fetched data
       })
       .catch(() => {
-        setLoading(false)
-      })
-  }
+        setLoading(false); // Set loading to false if there's an error
+      });
+  };
+
+  // Function to handle delete action
+  const onDeleteClick = (anime) => {
+    // Confirm deletion with the user
+    if (!window.confirm("Are you sure you want to delete this anime?")) {
+      return; // If user cancels deletion, exit the function
+    }
+    
+    // Make DELETE request to delete the anime
+    axiosClient.delete(`/animes/${anime.id}`)
+      .then(() => {
+        getAnime(); // Fetch updated anime list after successful deletion
+      });
+  };
 
   return (
     <div>
@@ -39,7 +56,12 @@ export default function AnimeList() {
                 <p>Category: {item.category}</p>
                 <p>Description: {item.description}</p>
                 <p>Image: {item.image}</p>
+                <Link to={`/discover/edit/${item.id}`}>
+                  <button>Edit</button>
+                </Link>
+                <button className="btn-delete" onClick={e => onDeleteClick(item)}>Delete</button>
               </div>
+
             ))}
           </div>
         )}

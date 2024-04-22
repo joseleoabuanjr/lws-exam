@@ -6,27 +6,34 @@ import { useStateContext } from "../contexts/contextprovider";
 
 export default function Signup() {
 
+  // Refs to hold the references to the input fields
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const password_confirmation = useRef();
-  const [errors, setErrors] = useState(null);
-  const {setUser, setToken} = useStateContext();
+  const password_confirmation = useRef(); // Ref for password confirmation, should be named consistently
 
-  const onSubmit =  (events) =>{
+  // State to hold validation errors
+  const [errors, setErrors] = useState(null);
+
+  // Destructuring setUser and setToken functions from useStateContext
+  const { setUser, setToken } = useStateContext();
+
+  // Function to handle form submission
+  const onSubmit = (events) => {
     events.preventDefault();
 
-    //get inputed value from form
+    // Get input values from form using refs
     const payload = {
       name: nameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
       password_confirmation: password_confirmation.current.value,
-    }
+    };
 
-    //Post Data
+    // Post Data to signup endpoint
     axiosClient.post('/signup', payload)
-      .then(({data})=> {
+      .then(({ data }) => {
+        // Set user and token in the context
         setUser(data.user);
         setToken(data.token);
         // Reset errors
@@ -34,11 +41,12 @@ export default function Signup() {
       })
       .catch((error) => {
         const response = error.response;
-        if(response && response.status === 422){
-            console.log(response);
-            setErrors(response.data.errors);
+        if (response && response.status === 422) {
+          // Log the error response and set errors state
+          console.log(response);
+          setErrors(response.data.errors);
         }
-    });
+      });
   };
 
   return (

@@ -4,41 +4,50 @@ import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/contextprovider";
 
 export default function Login() {
-  const { token } = useStateContext()
-  if(token){
-    
-  }
+  // Destructure token from useStateContext
+  const { token } = useStateContext();
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const { setUser, setToken } = useStateContext();
-    const [message, setMessage] = useState(null);
-    const [errors, setErrors] = useState(null);
+  // Refs for email and password inputs
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
-    const onSubmit = events => {
-      events.preventDefault()
-  
-      const payload = {
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-      }
+  // Destructure setUser and setToken from useStateContext
+  const { setUser, setToken } = useStateContext();
 
-      axiosClient.post('/login', payload)
-        .then(({data}) => {
-          setUser(data.user);
-          setToken(data.token);
-          // Reset errors
-          setErrors(null);
-        })
-        .catch((error) => {
-          const response = error.response;
-          console.log(response);
-          if (response && response.status === 422) {
-            setErrors(response.data.errors);
-            setMessage(response.data.message);
-          }
-        })
-    }
+  // State for message and errors
+  const [message, setMessage] = useState(null);
+  const [errors, setErrors] = useState(null);
+
+  // Function to handle form submission
+  const onSubmit = (events) => {
+    events.preventDefault();
+
+    // Get values from input refs
+    const payload = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
+    // Send POST request to login endpoint
+    axiosClient.post('/login', payload)
+      .then(({ data }) => {
+        // Set user data and token in context
+        setUser(data.user);
+        setToken(data.token);
+        // Reset message and errors
+        setMessage(null);
+        setErrors(null);
+      })
+      .catch((error) => {
+        const response = error.response;
+        console.log(response);
+        if (response && response.status === 422) {
+          // Set errors and message from the response
+          setErrors(response.data.errors);
+          setMessage(response.data.message);
+        }
+      });
+  };
  
   return (
     <>

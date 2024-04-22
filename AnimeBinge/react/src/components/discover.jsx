@@ -9,7 +9,6 @@ export default function Discover() {
         <>
         <div>
             <Navigation/>
-            Discover Anime
             <Outlet/>
         </div>
         </>

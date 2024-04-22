@@ -5,7 +5,7 @@ import Login from './views/login';
 import Signup from './views/signup';
 import HomeContent from './views/homecontent';
 import Discover from './components/discover';
-import AddAnime from './views/addanime';
+import AnimeForm from './views/animeform';
 import AnimeList from './views/animelist';
 
 const router = createBrowserRouter([
@@ -29,9 +29,12 @@ const router = createBrowserRouter([
         },
         {
             path: "/discover/addanime",
-            element: <AddAnime/>,
+            element: <AnimeForm key="animeCreate"/>,
         },
-        
+        {
+            path: "/discover/edit/:id",
+            element: <AnimeForm key="animeUpdate"/>,
+        },
     ]
 },
 {
