@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../contexts/contextprovider.jsx";
@@ -196,6 +196,11 @@ export default function AnimeForm() {
                 {errors && errors.image && <span className="error">{errors.image[0]}</span>}
             </div>
             <button className="btn">Save</button>
+            <Link to="/discover">
+              <button>
+                Back
+              </button>
+            </Link>
           </form>
         )}
       </div>

@@ -1,5 +1,6 @@
-import { useContext,useState,createContext } from "react";
+import { useContext, useState, createContext } from "react";
 
+// Create a new context with initial values for user, token, setUser, and setToken
 const StateContext = createContext({
     user: null,
     token: null,
@@ -7,19 +8,26 @@ const StateContext = createContext({
     setToken: () => {}
 });
 
-export const ContextProvider = ({children}) => {
+// ContextProvider component to manage global state
+export const ContextProvider = ({ children }) => {
+    // Define user and setUser state using React's useState hook
     const [user, setUser] = useState({});
+    
+    // Define token and _setToken state using React's useState hook
+    // Get initial token value from local storage
     const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
 
+    // Function to set token and update local storage
     const setToken = (token) => {
-        _setToken(token)
-        if(token){
-            localStorage.setItem('ACCESS_TOKEN',token);
-        }
-        else{
-            localStorage.removeItem('ACCESS_TOKEN');
+        _setToken(token); // Set token state
+        if (token) {
+            localStorage.setItem('ACCESS_TOKEN', token); // Update local storage with new token
+        } else {
+            localStorage.removeItem('ACCESS_TOKEN'); // Remove token from local storage if null
         }
     }
+
+    // Provide the state values and setter functions to child components
     return (
         <StateContext.Provider value={{
             user,
@@ -27,9 +35,10 @@ export const ContextProvider = ({children}) => {
             setUser,
             setToken
         }}>
-            {children}
+            {children} {/* Render child components */}
         </StateContext.Provider>
     )
 }
 
-export const useStateContext = () => useContext(StateContext)
+// Custom hook to access the context values
+export const useStateContext = () => useContext(StateContext);

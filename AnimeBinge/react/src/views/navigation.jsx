@@ -2,6 +2,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/contextprovider";
 import axiosClient from "../axios-client.js";
 import { useEffect } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
 
 export default function Navigation() {
 
@@ -36,27 +37,33 @@ export default function Navigation() {
   }, []); // Empty dependency array to ensure useEffect runs only once when component mounts
 
     return(
-    <div className="navbar">
-        <nav className="Nav">
-            <h2>AnimeBinge</h2>
-            <ul className="nav-menu">
-                <li className="nav-item">
-                    <Link to="/">Home</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/discover">Discover</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/">About Us</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/">{user.name}</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/logout" onClick={onLogout}>Logout</Link>
-                </li>
-            </ul>
-        </nav>
-    </div>
+        <>
+            <Navbar className="bg-body-tertiary" style={{height : 100,}}>
+                <Container>
+                    <Navbar.Brand href="/" >
+                        <h2 style={{fontSize: 30}}>AnimeBinge</h2>
+                    </Navbar.Brand>   
+                    <Nav className="justify-content-end" activeKey="/home">
+                        <Nav.Item >
+                            <Nav.Link href="/">Home</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="/discover">Discover</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="/">About Us</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="/">{user.name}</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="/logout" onClick={onLogout}>Logout</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                </Container>
+            </Navbar>
+        </>
+
+   
     )
 }
